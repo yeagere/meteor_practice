@@ -1,0 +1,75 @@
+<head>
+  <title>image_share</title>
+</head>
+
+<body>
+  {{> image_add_form}}
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      {{> loginButtons}}
+    </div>
+  </nav>
+  
+  <div class="container">   
+    <h1>Welcome to image share {{username}}!</h1>
+    {{> images}}
+  </div>
+</body>
+
+<template name="image_add_form">
+
+<div class="modal fade" id="image_add_form">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"></div>
+      </div>
+      <div class="modal-body">
+        <form class="js-add-image">
+          <input type="text" name="img_src"/>
+          <br/><input type="text" name="img_alt"/>
+          <button class="btn btn-success">save</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" data-dismiss="modal">
+        cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template name="images">
+    {{#if currentUser}}
+      <button class="btn btn-success js-show-image-form">
+      add image</button>
+    {{/if}}
+
+    <h2>
+      {{#if filtering_images}}
+        Showing images by user {{getFilterUser}}<a href="#" class="js-unset-image-filter">Show all images</a>
+      {{/if}}
+    </h2>
+
+    <div class="row">
+  {{#each images}}
+  <div class="col-xs-12 col-md-3" id="{{_id}}">
+    <div class="thumbnail">
+        <img class="js-image thumbnail-img" 
+        src="{{img_src}}" 
+        alt="{{img_alt}}"/>
+        
+        <div class="caption">
+          <p>{{img_alt}}</p>
+          <p>User: <a href="#" class="js-set-image-filter">{{getUser createdBy}}</a></p>
+          <button class="js-del-image btn btn-warning">
+          delete</button>  
+        </div>
+    </div>
+  </div> <!-- / col -->
+  {{/each}}
+    </div> <!-- / row -->  
+  </template>
+
